@@ -204,12 +204,13 @@ class GoMedia_Webhook_Model_Observer {
         $orderOut['customer']['customer_id'] = $orderIn->getCustomerId();
 
         /** @var $shipping_address Mage_Sales_Model_Order_Address*/
-        try {
-            $shipping_address = $orderIn->getShippingAddress();
+        $shipping_address = $orderIn->getShippingAddress();
+        // if shipping address not in use, try billing address
+        if(is_object($shipping_address)) {
             $orderOut['shipping_address'] = $shipping_address->getData();
-        } catch (\Exception $e) {
+        } else {
             // shipping address failed set it to billing address
-            /** @var $shipping_address Mage_Sales_Model_Order_Address*/
+            /** @var $billing_address Mage_Sales_Model_Order_Address*/
             $billing_address = $orderIn->getBillingAddress();
             $orderOut['shipping_address'] = $billing_address->getData();
         }
