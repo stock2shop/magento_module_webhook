@@ -1,5 +1,3 @@
-# magento_module_rest
-
 ## Installation instructions
 *NOTE: Before getting started you may want to backup your website.*
 
